@@ -589,6 +589,8 @@
             box-sizing: inherit
 
         &.focused
+            outline: 2px solid #000000cc
+            
             .border
                 border-color: var(--color-border-focused)
 

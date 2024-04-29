@@ -229,10 +229,10 @@
 
 <style lang="sass" scoped>
     .iod-container.iod-toggle
-        --local-color-off: var(--color-border)
-        --local-color-off-text: var(--color-on-primary)
-        --local-color-on: var(--color-primary)
-        --local-color-on-text: var(--color-on-primary)
+        --local-color-off: var(--color-border-focused)
+        --local-color-off-text: var(--color-background)
+        --local-color-on: var(--color-text)
+        --local-color-on-text: var(--color-background)
 
         font-size: 1rem
         position: relative
@@ -254,6 +254,7 @@
 
         &.active
             .checkbox
+                box-shadow: none
                 background: var(--local-color-on)
                 border-color: var(--local-color-on)
                 color: var(--local-color-on-text)
@@ -320,7 +321,8 @@
             position: relative
             z-index: 1
             user-select: none
-            border: 2px solid transparent
+            border: 1px solid transparent
+            box-shadow: inset 0 0 2px var(--local-color-off)
             transition: all 50ms ease-in-out
 
             border-color: var(--local-color-off)

@@ -1,5 +1,5 @@
 <template>
-    <component :is="is" class="he-container he-flex" :class="classes" :style="{width, height, gap, padding, alignItems: vAlign, justifyContent: hAlign}">
+    <component :is="is" class="he-container he-flex" :class="classes" :style="{width, height, flex, gap, padding, alignItems: vAlign, justifyContent: hAlign}">
         <slot />
     </component>
 </template>
@@ -37,6 +37,10 @@
         gap: {
             type: [String, Number],
             default: 0,
+        },
+        flex: {
+            type: String,
+            default: '',
         },
         height: {
             type: String,

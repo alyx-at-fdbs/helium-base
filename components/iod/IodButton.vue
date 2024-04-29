@@ -8,11 +8,11 @@
         :class="classes"
         :style="style">
 
-        <div class="icon" v-if="iconLeft || $slots.iconLeft"><slot name="iconLeft">{{iconLeft}}</slot></div>
+        <div class="icon icon-left" v-if="iconLeft || $slots.iconLeft"><slot name="iconLeft">{{iconLeft}}</slot></div>
         <span class="content">
-            <slot><span>{{label}}</span></slot>
+            <slot>{{ label }}</slot>
         </span>
-        <div class="icon" v-if="iconRight || $slots.iconRight"><slot name="iconRight">{{iconRight}}</slot></div>
+        <div class="icon icon-right" v-if="iconRight || $slots.iconRight"><slot name="iconRight">{{iconRight}}</slot></div>
 
         <IodLoader type="spinner" class="spinner"/>
 
@@ -61,11 +61,11 @@
         },
         size: {
             type: String,
-            default: 'normal',
+            default: 'm',
         },
-        shape: {
+        corner: {
             type: String,
-            default: 'radius-m',
+            default: 'm',
         },
         shadow: {
             type: String,
@@ -94,7 +94,7 @@
     const classes = computed((): object => {
         return [
             `button-size-${props.size}`,
-            `button-shape-${props.shape}`,
+            `button-corner-${props.corner}`,
             `button-shadow-${props.shadow}`,
             `button-variant-${props.variant}`,
             `button-color-preset-${props.colorPreset}`,
@@ -124,8 +124,8 @@
         display: inline-flex
         align-items: center
         justify-content: center
-        gap: .8em
-        padding: 0 1em
+        gap: 1.25em
+        padding: 0 1.5em
         height: 2.5em
         text-align: center
         text-decoration: none
@@ -151,7 +151,7 @@
                 opacity: 0.1
 
         &:focus
-            outline: 3px solid var(--local-color-background)
+            outline: 2px solid #000000cc
 
             .overlay
                 opacity: 0.17
@@ -206,39 +206,44 @@
 
 
 
-        &.button-size-small
+        &.button-size-s
             height: 2em
             padding: 0 1.25em
-            gap: .7em
+            gap: 1em
 
-        &.button-size-normal
+        &.button-size-m
             height: 2.5em
             padding: 0 1.5em
-            gap: .8em
+            gap: 1.25em
 
-        &.button-size-large
+        &.button-size-l
             height: 3em
+            padding: 0 1.75em
+            gap: 1.5em
+
+        &.button-size-xl
+            height: 3.5em
             padding: 0 2em
-            gap: 1.55em
+            gap: 1.75em
 
 
 
-        &.button-shape-rect
-            border-radius: 0px
+        &.button-corner-none
+            border-radius: 0
 
-        &.button-shape-radius-s
+        &.button-corner-s
             border-radius: var(--radius-s)
 
-        &.button-shape-radius-m
+        &.button-corner-m
             border-radius: var(--radius-m)
 
-        &.button-shape-radius-l
+        &.button-corner-l
             border-radius: var(--radius-l)
 
-        &.button-shape-radius-xl
+        &.button-corner-xl
             border-radius: var(--radius-xl)
 
-        &.button-shape-pill
+        &.button-corner-pill
             border-radius: 1000px
 
         
@@ -304,13 +309,14 @@
         .content
             font-size: var(--local-font-size)
             font-weight: inherit
+            line-height: 1.4
             letter-spacing: inherit
             position: relative
             z-index: 1
 
         .icon
             color: inherit
-            font-size: 1em
+            font-size: 1.2em
             letter-spacing: 0
             font-weight: normal
             pointer-events: none
@@ -319,6 +325,12 @@
             font-family: var(--font-icon)
             position: relative
             z-index: 1
+
+            &.icon-left
+                margin-left: -.15em
+
+            &.icon-right
+                margin-right: -.15em
 
         .spinner
             position: absolute
@@ -339,5 +351,7 @@
             z-index: 2
             border-radius: inherit
             border: 1px solid var(--local-color-text)
+            box-shadow: inset 0 0 1px var(--local-color-text)
+            opacity: .75
             pointer-events: none
 </style>

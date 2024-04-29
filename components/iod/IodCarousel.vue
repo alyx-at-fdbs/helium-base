@@ -7,11 +7,11 @@
         </TransitionGroup>
         
         <div class="controls" :class="{overlay: overlay}" :style="'animation-duration: '+interval+'ms'">
-            <IodIconButton v-if="arrows" aria-label="Vorigen Slide anzeigen" icon="west" shape="pill" variant="contained" size="small" @click="prevSlide(true)" />
+            <IodIconButton v-if="arrows" aria-label="Vorigen Slide anzeigen" icon="west" corner="pill" variant="contained" size="s" @click="prevSlide(true)" />
             <div v-if="dots" class="dots">
                 <button class="dot" :aria-label="'Slide Nr. '+i+' anzeigen'" :class="{autoplay: autoSlide, active: slide == currentSlide}" v-for="(slide, i) in slides" :key="slide" @click="goToSlide(slide, true)"></button>
             </div>
-            <IodIconButton v-if="arrows" aria-label="Nächsten Slide anzeigen" icon="east" shape="pill" variant="contained" size="small" @click="nextSlide(true)" />
+            <IodIconButton v-if="arrows" aria-label="Nächsten Slide anzeigen" icon="east" corner="pill" variant="contained" size="s" @click="nextSlide(true)" />
         </div>
     </div>
 </template>

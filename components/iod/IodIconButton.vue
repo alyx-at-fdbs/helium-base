@@ -55,11 +55,11 @@
         },
         size: {
             type: String,
-            default: 'normal',
+            default: 'm',
         },
-        shape: {
+        corner: {
             type: String,
-            default: 'radius-m',
+            default: 'm',
         },
         shadow: {
             type: String,
@@ -88,7 +88,7 @@
     const classes = computed((): object => {
         return [
             `button-size-${props.size}`,
-            `button-shape-${props.shape}`,
+            `button-corner-${props.corner}`,
             `button-shadow-${props.shadow}`,
             `button-variant-${props.variant}`,
             `button-color-preset-${props.colorPreset}`,
@@ -146,7 +146,7 @@
                 opacity: 0.1
 
         &:focus
-            outline: none
+            outline: 2px solid #000000cc
 
             .overlay
                 opacity: 0.17
@@ -201,45 +201,52 @@
 
 
 
-        &.button-size-small
+        &.button-size-s
             height: 2em
             width: 2em
 
             .content
                 font-size: 1.2rem
 
-        &.button-size-normal
+        &.button-size-m
             height: 2.5em
             width: 2.5em
 
             .content
                 font-size: 1.4rem
 
-        &.button-size-large
+        &.button-size-l
             height: 3em
             width: 3em
 
             .content
                 font-size: 1.6rem
 
+        &.button-size-xl
+            height: 3.5em
+            width: 3.5em
+
+            .content
+                font-size: 1.8rem
 
 
-        &.button-shape-rect
+
+        &.button-corner-none
             border-radius: 0px
 
-        &.button-shape-radius-s
+        &.button-corner-s
             border-radius: var(--radius-s)
 
-        &.button-shape-radius-m
+        &.button-corner-m
             border-radius: var(--radius-m)
 
-        &.button-shape-radius-l
+        &.button-corner-l
             border-radius: var(--radius-l)
 
-        &.button-shape-radius-xl
+        &.button-corner-xl
             border-radius: var(--radius-xl)
 
-        &.button-shape-pill
+        &.button-corner-pill
             border-radius: 1000px
 
 
@@ -306,7 +313,7 @@
             font-size: 1.4rem
             font-weight: inherit
             font-family: var(--local-font) !important
-            line-height: 1
+            line-height: 0
             letter-spacing: inherit
             position: relative
             z-index: 1
@@ -330,5 +337,7 @@
             z-index: 2
             border-radius: inherit
             border: 1px solid var(--local-color-text)
+            box-shadow: inset 0 0 1px var(--local-color-text)
+            opacity: .75
             pointer-events: none
 </style>
