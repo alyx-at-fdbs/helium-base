@@ -22,7 +22,7 @@
                         :color-preset="colorPreset"
                         :variant="variant"
                         :size="size"
-                        label="Button"
+                        :label="label"
                     />
 
                     <IodIconButton
@@ -35,7 +35,7 @@
                         :color-preset="colorPreset"
                         :variant="variant"
                         :size="size"
-                        icon="category"
+                        :icon="icon"
                     />
                 </template>
             </template>
@@ -47,6 +47,8 @@
                     <IodButton style="flex: 1" :variant="type === 'text' ? 'filled' : 'contained'" @click="type = 'text'" label="Text"/>
                     <IodButton style="flex: 1" :variant="type === 'icon' ? 'filled' : 'contained'" @click="type = 'icon'" label="Icon"/>
                 </HeFlex>
+                <IodInput v-if="type === 'text'" class="same-height-input" v-model="label" placeholder="Label" clearable />
+                <IodInput v-if="type === 'icon'" class="same-height-input" v-model="icon" placeholder="Icon" clearable />
             </div>
             <div class="setting-group">
                 <span class="label">Color Preset</span>
@@ -96,12 +98,18 @@
                 <IodInput class="same-height-input" v-model="iconLeft" placeholder="Left icon" clearable />
                 <IodInput class="same-height-input" v-model="iconRight" placeholder="Right icon" clearable />
             </div>
+            <div class="setting-group">
+                <span class="label">Code</span>
+                <IodButton size="s" corner="pill" icon-left="content_copy" label="Copy Code" @click="copy(output)"/>
+            </div>
         </div>
     </div>
 </template>
 
 <script lang="ts" setup>
     const type = ref('text')
+    const label = ref('Button')
+    const icon = ref('category')
     const colorPreset = ref('')
     const corner = ref('')
     const border = ref(false)
@@ -110,6 +118,35 @@
     const iconLeft = ref('')
     const iconRight = ref('')
     const shadow = ref('')
+
+    const output = computed(() => {
+        let $ = ''
+        
+        if (type.value === 'text')
+        {
+            $ += `<IodButton type="button" label="${label.value}" `
+            if (iconLeft.value) $ += `icon-left="${iconLeft.value}" `
+            if (iconRight.value) $ += `icon-right="${iconRight.value}" `
+        }
+        else
+        {
+            $ += `<IodIconButton type="button" icon="${icon.value}" `
+        }
+
+        if (corner.value) $ += `corner="${corner.value}" `
+        if (shadow.value) $ += `shadow="${shadow.value}" `
+        if (colorPreset.value) $ += `color-preset="${colorPreset.value}" `
+        if (disabled.value) $ += `disabled `
+        if (loading.value) $ += `loading `
+        if (border.value) $ += `border `
+
+        return `${$}/>`
+    })
+
+    function copy(text: string)
+    {
+        navigator.clipboard.writeText(text)
+    }
 </script>
 
 <style lang="sass" scoped>
@@ -120,9 +157,7 @@
         grid-template-areas: "preview settings"
         border: 1px solid var(--bg-slate-300)
         border-radius: var(--radius-m)
-        // outline: 1px solid var(--bg-slate-400)
         overflow: hidden
-        // box-shadow: var(--shadow-s)
 
         .label
             font-weight: 500
@@ -132,7 +167,7 @@
             user-select: none
 
         .same-height-input
-            height: 2.75rem !important
+            height: 2.5rem !important
 
             &.iod-toggle
                 background: var(--color-background-soft)
