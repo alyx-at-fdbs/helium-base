@@ -1,5 +1,5 @@
 <template>
-    <component :is="is" class="he-container he-flex" :class="classes" :style="{width, height, flex, gap, padding, alignItems: vAlign, justifyContent: hAlign}">
+    <component :is="is" class="he-container he-flex" :class="classes" :style="{gap, padding, alignItems: alignV, justifyContent: alignH}">
         <slot />
     </component>
 </template>
@@ -22,11 +22,11 @@
             type: Boolean,
             default: false,
         },
-        yAlign: {
+        alignY: {
             type: String,
             default: 'center',
         },
-        xAlign: {
+        alignX: {
             type: String,
             default: 'unset',
         },
@@ -38,18 +38,14 @@
             type: [String, Number],
             default: 0,
         },
-        flex: {
-            type: String,
-            default: '',
+        breakpoint: {
+            type: [Number, String],
+            default: null,
         },
-        height: {
-            type: String,
-            default: '',
-        },
-        width: {
-            type: String,
-            default: '',
-        },
+        reversed: {
+            type: Boolean,
+            default: false,
+        }
     })
 
     const classes = computed(() => {
@@ -57,24 +53,35 @@
             `flex-direction-${direction.value}`,
             {
                 'flex-wrap': props.wrap,
+                'reversed': props.reversed,
+                'reached-breakpoint': reachedBreakpoint.value,
             },
         ]
     })
 
+    const reachedBreakpoint = ref(false)
+    function calculateReachedBreakpoint()
+    {
+        if (!props.breakpoint) return reachedBreakpoint.value = false
+        return reachedBreakpoint.value = matchMedia(`(max-width: ${props.breakpoint}px)`).matches
+    }
+
+
     const direction = computed(() => {
+        if (reachedBreakpoint.value) return 'vertical'
         if (props.horizontal) return 'horizontal'
         if (props.vertical) return 'vertical'
         return 'vertical'
     })
 
-    const vAlign = computed(() => {
-        if (direction.value === 'vertical') return props.xAlign
-        return props.yAlign
+    const alignV = computed(() => {
+        if (direction.value === 'vertical') return props.alignX
+        return props.alignY
     })
 
-    const hAlign = computed(() => {
-        if (direction.value === 'vertical') return props.yAlign
-        return props.xAlign
+    const alignH = computed(() => {
+        if (direction.value === 'vertical') return props.alignY
+        return props.alignX
     })
 
     const padding = computed(() => {
@@ -85,6 +92,12 @@
     const gap = computed(() => {
         if (typeof props.gap === 'number') return `${props.gap}rem`
         return props.gap
+    })
+
+
+    onMounted(() => {
+        calculateReachedBreakpoint()
+        window.addEventListener('resize', calculateReachedBreakpoint)
     })
 </script>
 
@@ -98,6 +111,14 @@
         &.flex-direction-horizontal
             flex-direction: row
 
+            &.reversed:not(.reached-breakpoint)
+                
+                flex-direction: row-reverse
+
         &.flex-direction-vertical
             flex-direction: column
+
+            &.reversed:not(.reached-breakpoint)
+                
+                flex-direction: column-reverse
 </style>

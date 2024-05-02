@@ -16,11 +16,9 @@
         border: none
         border-top: 1px solid var(--color-border)
         width: 100%
-        margin: 0
 
     .he-container.he-divider.vertical
         border: none
         border-left: 1px solid var(--color-border)
         width: unset
-        margin: 0
 </style>

@@ -2,10 +2,10 @@
     <div class="layout">
         <div class="preview small-scrollbar">
             <b></b>
-            <span class="label">size xl</span>
-            <span class="label">size l</span>
-            <span class="label">size m</span>
-            <span class="label">size s</span>
+            <span class="label">size&nbsp;xl</span>
+            <span class="label">size&nbsp;l</span>
+            <span class="label">size&nbsp;m</span>
+            <span class="label">size&nbsp;s</span>
             
             <template v-for="variant in ['filled', 'contained', 'text']">
                 <span class="label">{{ variant }}</span>
@@ -204,4 +204,14 @@
 
                 &:last-child
                     border-bottom: none
+
+    @media (max-width: 768px)
+        .layout
+            grid-template-columns: 1fr
+            grid-template-rows: 1fr 400px
+            grid-template-areas: "preview" "settings"
+
+            .settings
+                border-left: none
+                border-top: 1px solid var(--bg-slate-200)
 </style>
